@@ -1,0 +1,29 @@
+package hier
+
+model HierarchicalRockets {
+	param GlobalDataSource data
+
+	param Plate<Integer> Y
+	random Plated<RealVar> As
+	random Plated<RealVar> Bs
+
+	param Plate<String> fam
+	param Plated<IntVar> L
+	random Plated<RealVar> P
+	random Plated<IntVar> F
+
+	laws {
+		for(Index<Integer> y: Y.indices) {
+			As.get(y) ~ Gamma(1,1)
+			Bs.get(y) ~ Gamma(1,1)
+			for(Index<String> f: fam.indices(y)) {
+				P.get(f,y) | RealVar a = As.get(y),
+							 RealVar b = Bs.get(y)
+							 ~ Beta(a,b)
+				F.get(f,y) | RealVar p = P.get(f,y),
+							 IntVar l = L.get(f,y)
+							 ~ Binomial(l,p)
+			}
+		}
+	}
+}
