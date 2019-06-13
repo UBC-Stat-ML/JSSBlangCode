@@ -1,0 +1,15 @@
+package jss
+
+model HelloWorld {
+  random RealVar z ?: latentReal()
+  random RealVar y ?: 3
+  param RealVar rate ?: 1.0
+  laws {
+    z | rate ~ Exponential(rate) 
+    y | z ~ ContinuousUniform(0.0, z)    
+  }
+
+}
+
+
+
