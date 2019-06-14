@@ -2,7 +2,7 @@ package jss
 
 model HelloWorld {
   random RealVar z ?: latentReal()
-  random RealVar y ?: 3
+  random RealVar y ?: 3.0
   param RealVar rate ?: 1.0
   laws {
     z | rate ~ Exponential(rate) 
