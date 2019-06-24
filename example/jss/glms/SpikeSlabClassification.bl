@@ -2,8 +2,6 @@ package jss.glms
 
 model SpikeSlabClassification {
   
-  param Integer maxNumberFeatures ?: Integer.MAX_VALUE
-  
   param GlobalDataSource data
   param Plate<String> instances, features
   
@@ -28,13 +26,6 @@ model SpikeSlabClassification {
     }
     intercept | sigma ~ StudentT(1.0, 0.0, sigma)
     
-    | maxNumberFeatures, 
-      Collection<IntVar> indicators = parameters.asCollection(features).map[selected].toList 
-    ~  LogPotential(
-        if (indicators.map[intValue].sum > maxNumberFeatures) NEGATIVE_INFINITY 
-        else 0.0
-      )
-        
     activeProbability ~ ContinuousUniform(0, 1)
     sigma ~ Exponential(1.0)
     
