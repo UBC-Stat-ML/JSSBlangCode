@@ -1,6 +1,5 @@
 package jss.glms
 
-
 model SpikeSlabClassification {
   
   param Integer maxNumberFeatures ?: Integer.MAX_VALUE
