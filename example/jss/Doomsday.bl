@@ -1,0 +1,12 @@
+package jss
+
+model Doomsday {
+  random RealVar z
+  random RealVar y
+  param RealVar rate
+  laws {
+    z | rate ~ Exponential(rate) 
+    y | z ~ ContinuousUniform(0.0, z)    
+  }
+
+}
