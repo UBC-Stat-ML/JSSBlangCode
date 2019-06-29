@@ -1,0 +1,1 @@
+--model jss.benchmark.blang.Mixture$Builder --model.data file ../data/mixture_data.csv --postProcessor defaultPostProcessor

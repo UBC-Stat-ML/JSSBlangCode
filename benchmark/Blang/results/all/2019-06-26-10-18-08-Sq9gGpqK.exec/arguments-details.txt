@@ -1,0 +1,179 @@
+# --checkIsDAG <boolean> (default value: true)
+
+# --engine <PosteriorInferenceEngine: SCM|PT|Forward|Exact|None|fully qualified> (default value: PT)
+
+# --engine.adaptFraction <double> (default value: 0.5)
+
+# --engine.initialization <InitType: COPIES|FORWARD|SCM> (default value: SCM)
+
+# --engine.ladder <TemperatureLadder: Geometric|EquallySpaced|Polynomial|UserSpecified|fully qualified> (default value: EquallySpaced)
+
+# --engine.nChains <Integer> (optional)
+#   description: If unspecified, use the number of threads.
+
+# --engine.nPassesPerScan <double> (default value: 3)
+
+# --engine.nScans <int> (default value: 1_000)
+
+# --engine.nThreads <Cores: Single|Max|Dynamic|Fixed|fully qualified> (default value: Dynamic)
+
+# --engine.nThreads.fraction <double> (default value: 0.5)
+
+# --engine.nThreads.ignoreUtilizedCores <boolean> (default value: true)
+
+# --engine.nThreads.verbose <boolean> (default value: false)
+
+# --engine.random <Random> (default value: 1)
+
+# --engine.reversible <boolean> (default value: false)
+
+# --engine.scmInit.maxAnnealingParameter <double> (default value: 1.0)
+#   description: Use higher values for likelihood maximization
+
+# --engine.scmInit.nFinalRejuvenations <int> (default value: 5)
+#   description: Number of rejuvenation passes to do after the change of measure.
+
+# --engine.scmInit.nParticles <int> (default value: 1_000)
+
+# --engine.scmInit.nThreads <Cores: Single|Max|Dynamic|Fixed|fully qualified> (default value: Dynamic)
+
+# --engine.scmInit.nThreads.fraction <double> (default value: 0.5)
+
+# --engine.scmInit.nThreads.ignoreUtilizedCores <boolean> (default value: true)
+
+# --engine.scmInit.nThreads.verbose <boolean> (default value: false)
+
+# --engine.scmInit.random <Random> (default value: 1)
+#   description: Random seed used for proposals and resampling.
+
+# --engine.scmInit.resamplingESSThreshold <double> (default value: 0.5)
+#   description: If the (relative) Effective Sample Size (ESS) falls below, perform a resampling round.
+
+# --engine.scmInit.resamplingScheme <ResamplingScheme: STRATIFIED|MULTINOMIAL> (default value: STRATIFIED)
+
+# --engine.scmInit.temperatureSchedule <TemperatureSchedule: AdaptiveTemperatureSchedule|FixedTemperatureSchedule|fully qualified> (default value: AdaptiveTemperatureSchedule)
+#   description: Algorithm selecting annealing parameter increments.
+
+# --engine.scmInit.temperatureSchedule.nudgeFromZeroIfOutOfSupport <double> (default value: 1e-10)
+#   description: If all particles are out of support at first iteration, nudge the temperature a bit so that support constraints kick in.
+
+# --engine.scmInit.temperatureSchedule.threshold <double> (default value: 0.9999)
+#   description: Annealing parameter is selected to get the (conditional) ESS decrease specified by this parameter.
+
+# --engine.scmInit.temperatureSchedule.useConditional <boolean> (default value: true)
+#   description: See Zhou, Johansen and Aston (2013).
+
+# --engine.targetAccept <Double> (optional)
+
+# --engine.usePriorSamples <boolean> (default value: true)
+
+# --excludeFromOutput <List: Space separated items or "file <path>" to load from newline separated file> (optional)
+
+# --experimentConfigs.configFile <File> (optional)
+#   description: If set, use those arguments in provided file that do not appear in the provided arguments.
+
+# --experimentConfigs.description <String> (optional)
+#   description: Documentation for this run.
+
+# --experimentConfigs.managedExecutionFolder <boolean> (default value: true)
+#   description: Automatically organize results into subdirectories of 'results/all'?
+
+# --experimentConfigs.maxIndentationToPrint <int> (default value: inf)
+#   description: Use -1 to silence all output
+
+# --experimentConfigs.recordExecutionInfo <boolean> (default value: true)
+#   description: Record information such as timing, main class, code version, etc for this run?
+
+# --experimentConfigs.recordGitInfo <boolean> (default value: false)
+
+# --experimentConfigs.saveStandardStreams <boolean> (default value: true)
+#   description: Save combined standard out and err into a file?
+
+# --experimentConfigs.tabularWriter <TabularWriterFactory: CSV|Spark|fully qualified> (default value: CSV)
+
+# --initRandom <Random> (default value: 1)
+
+  --model jss.benchmark.blang.Mixture$Builder    # <ModelBuilder: fully qualified>
+
+# --model.K <Integer> (optional)
+
+  --model.data file ../data/mixture_data.csv    # <List: Space separated items or "file <path>" to load from newline separated file>
+
+# --model.indicators <List: Space separated items or "file <path>" to load from newline separated file> (optional)
+
+# --model.means <List: Space separated items or "file <path>" to load from newline separated file> (optional)
+
+# --model.pi <Simplex: fully qualified> (optional)
+
+# --model.sds <List: Space separated items or "file <path>" to load from newline separated file> (optional)
+
+  --postProcessor defaultPostProcessor    # <PostProcessor: DefaultPostProcessor|NoPostProcessor|fully qualified> (default value: NoPostProcessor)
+
+# --postProcessor.blangExecutionDirectory <File> (optional)
+#   description: When called from Blang, this will be the latest run, otherwise point to the .exec folder created by Blang
+
+# --postProcessor.burnInFraction <double> (default value: 0.5)
+
+# --postProcessor.essEstimator <EssEstimator: Batch|ACT|AR|fully qualified> (default value: Batch)
+
+# --postProcessor.essEstimator.referenceFile <File> (optional)
+#   description: csv file containing reference values for the mean and sd
+
+# --postProcessor.essEstimator.referenceMeanColumn <String> (default value: mean)
+#   description: Look for this column name for reference mean.
+
+# --postProcessor.essEstimator.referenceSDColumn <String> (default value: sd)
+#   description: Look for this column name for reference sd.
+
+# --postProcessor.experimentConfigs.configFile <File> (optional)
+#   description: If set, use those arguments in provided file that do not appear in the provided arguments.
+
+# --postProcessor.experimentConfigs.description <String> (optional)
+#   description: Documentation for this run.
+
+# --postProcessor.experimentConfigs.managedExecutionFolder <boolean> (default value: true)
+#   description: Automatically organize results into subdirectories of 'results/all'?
+
+# --postProcessor.experimentConfigs.maxIndentationToPrint <int> (default value: inf)
+#   description: Use -1 to silence all output
+
+# --postProcessor.experimentConfigs.recordExecutionInfo <boolean> (default value: true)
+#   description: Record information such as timing, main class, code version, etc for this run?
+
+# --postProcessor.experimentConfigs.recordGitInfo <boolean> (default value: false)
+
+# --postProcessor.experimentConfigs.saveStandardStreams <boolean> (default value: true)
+#   description: Save combined standard out and err into a file?
+
+# --postProcessor.experimentConfigs.tabularWriter <TabularWriterFactory: CSV|Spark|fully qualified> (default value: CSV)
+
+# --postProcessor.facetHeight <double> (default value: 2.0)
+#   description: In inches
+
+# --postProcessor.facetWidth <double> (default value: 4.0)
+#   description: In inches
+
+# --postProcessor.imageFormat <String> (default value: pdf)
+
+# --postProcessor.rCmd <String> (default value: Rscript)
+
+# --postProcessor.referenceSamples <File> (optional)
+#   description: A directory containing means and variance estimates from a long run, used to improve ESS estimates; usually of the form /path/to/[longRunId].exec/summaries
+
+# --postProcessor.runPxviz <boolean> (default value: true)
+
+# --printAccessibilityGraph <boolean> (default value: false)
+
+# --samplers.additional <SamplerSet: Fully qualified instances of blang.mcmc.Sampler>
+#   description: Samplers to be added.
+
+# --samplers.excluded <SamplerSet: Fully qualified instances of blang.mcmc.Sampler>
+#   description: Samplers to be excluded (only useful if useAnnotation = true).
+
+# --samplers.useAnnotation <boolean> (default value: true)
+#   description: If the arguments of the annotations @Samplers should be used to determine a starting set of sampler types.
+
+# --stripped <boolean> (default value: false)
+#   description: Stripped means that the construction of forward simulators and annealers is skipped
+
+# --treatNaNAsNegativeInfinity <boolean> (default value: false)
