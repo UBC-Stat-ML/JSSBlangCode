@@ -1,6 +1,6 @@
-package jss
+package jss.hier
 
-model HierarchicalRockets {
+model Rockets {
 	param GlobalDataSource data
 
 	param Plate<Integer> Y
