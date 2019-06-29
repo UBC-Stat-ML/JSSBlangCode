@@ -17,9 +17,6 @@ data$female <- as.integer(as.logical(data$Sex == "female"))
 # one good feature
 data$child <- as.integer(as.logical(data$Age < 10))
 
-# one bad feature
-data$PclassDuplicate <- data$Pclass
-
 drops <- c("Survived", "Sex") # not needed in covariates file
 data <- data[ , !(names(data) %in% drops)]
 tidy_covariates <- data %>% gather(features, covariates, -Name)
