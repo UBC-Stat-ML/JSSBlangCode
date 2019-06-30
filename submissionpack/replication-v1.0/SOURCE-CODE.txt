@@ -1,0 +1,28 @@
+SOURCE CODE REPOSITORIES
+======================================================================
+
+All the source code for Blang is managed through Github 
+under the organization UBC-Stat-ML.
+
+The following are the core repositories used within the
+manuscript:
+
+- blangSDK: https://github.com/UBC-Stat-ML/blangSDK
+
+
+
+
+BLANG HOME PAGE AND DOCUMENTATION
+======================================================================
+
+- Blang: https://www.stat.ubc.ca/~bouchard/blang/index.html
+
+- Blang IDE: https://www.stat.ubc.ca/~bouchard/blang/Blang_IDE.html
+
+
+STABLE RELEASE
+======================================================================
+
+The examples and figures were generated using blangSDK 1.33.2
+
+- blangSDK: https://github.com/UBC-Stat-ML/blangSDK/releases

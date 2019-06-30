@@ -1,3 +1,4 @@
 */results/*
 *.blang-compilation
 benchmark/Blang/results
+.DS_Store
