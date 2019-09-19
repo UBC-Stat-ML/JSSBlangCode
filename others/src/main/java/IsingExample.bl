@@ -1,0 +1,39 @@
+package others
+
+import briefj.collections.UnorderedPair
+import static blang.validation.internals.fixtures.Functions.squareIsingEdges
+
+/*
+ * Please follow README.txt instructions first.
+ * To run this example:
+ * run others.IsingExample as a Java application.
+ */
+model IsingExample {
+  param Double moment ?: 0.0
+  param Double beta ?: log(1 + sqrt(2.0)) / 2.0 // critical point
+  param Integer N ?: 3
+  random List<IntVar> vertices ?: #[1, 1, 0,
+                                    1, 0, 0, 
+                                    1, 0, 1
+                                    ]
+  
+  laws {
+    
+    // Pairwise potentials
+    for (UnorderedPair<Integer, Integer> pair : squareIsingEdges(N)) {
+      | IntVar first  = vertices.get(pair.getFirst), 
+        IntVar second = vertices.get(pair.getSecond),
+        beta
+      ~ LogPotentialExample(
+          if ((first < 0 || first > 1 || second < 0 || second > 1))
+            return NEGATIVE_INFINITY
+          else
+            return beta*(2*first-1)*(2*second-1))
+    }
+    
+    // Node potentials
+    for (IntVar vertex : vertices) {
+      vertex | moment ~ Bernoulli(logistic(-2.0*moment))
+    }
+  }
+}

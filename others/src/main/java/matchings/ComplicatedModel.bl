@@ -1,0 +1,45 @@
+package matchings
+
+import matchings.Permutation
+
+/*
+ * Please follow README.txt instructions first.
+ * To run this example:
+ * run matchings.ComplicatedModel as a Java application.
+ */
+model ComplicatedModel {
+
+  random DenseMatrix obs ?: fixedMatrix(#[#[-4.4, 1.7, 5.4],
+                                          #[-0.3, 6.8, -5.0]])
+
+  param Integer numPlayers ?: 3
+  param Integer numGames   ?: 2
+
+  random List<RealVar> means ?: latentRealList(numPlayers)
+  random List<Permutation> permutations ?: {
+    val result = new ArrayList
+    for (game : 0 ..< numGames) 
+      result.add(new Permutation(numPlayers))
+    return result
+  }
+  
+  
+  laws {
+    
+    // Prior distributions for cluster (player) means.
+    for (int clusterIdx : 0 ..< numPlayers) {
+      means.get(clusterIdx) ~ ContinuousUniform(-20.0, 20.0)
+    }
+    
+    for (int rowIdx : 0 ..< obs.nRows) {
+      // Prior for each permutation
+      permutations.get(rowIdx) ~ UniformPermutation
+
+      // Likelihood functions for parameters (permutations and means).
+      for (int colIdx : 0 ..< obs.nCols) {
+      obs.getRealVar(rowIdx, colIdx) | means, colIdx, Permutation permutation = permutations.get(rowIdx) 
+        ~ Normal(means.get(permutation.getConnections.get(colIdx)), 4.0)
+      }
+    }
+  }
+}

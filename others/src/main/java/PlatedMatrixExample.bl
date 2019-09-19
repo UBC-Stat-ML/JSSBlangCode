@@ -1,0 +1,19 @@
+package others
+
+/*
+ * Please follow README.txt instructions first.
+ * To run this example:
+ * run others.PlatedMatrixExample as a Java application with the following command-line arguments
+ * --model.dims.maxSize 3 --model.replicates.maxSize 5
+ */
+model PlatedMatrixExample {
+  param Plate<String> dims
+  param Plate<String> replicates
+  random PlatedMatrix vectors
+  
+  laws {
+    for (Index<String> n : replicates.indices) {
+      vectors.getDenseVector(dims, n) ~ MultivariateNormal(ones(3), identity(3).cholesky)
+    }
+  }
+}

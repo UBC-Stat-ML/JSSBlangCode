@@ -1,0 +1,19 @@
+package others
+
+/** Not really a distribution, but rather a way to handle undirected model (AKA random fields). See Ising under the Examples page. */
+/*
+ * Please follow README.txt instructions first.
+ * To see how LogPotential(Example) can be used, see IsingExample.bl
+ */
+model LogPotentialExample {
+  /** The log of the current value of this potential. */
+  param RealVar logPotential
+  
+  laws {
+    logf(logPotential) {
+      return logPotential
+    }
+  }
+  
+  generate (rand) { throw new RuntimeException }
+}

@@ -1,0 +1,34 @@
+package others
+
+/*
+ * Please follow README.txt instructions first.
+ * To run this example:
+ * run others.MarkovChainExample as a Java application.
+ */
+model MarkovChainExample {  
+  
+  param Simplex initialDistribution ?: fixedSimplex(0.5, 0.5)   
+  param TransitionMatrix transitionProbabilities 
+          ?: fixedTransitionMatrix(#[#[0.1, 0.9],
+                                     #[0.9, 0.1]])
+  
+  random List<IntVar> chain ?: #[0, 1, 1, 1, 0]
+   
+  laws { 
+    
+    // Initial distribution:
+    chain.get(0) | initialDistribution ~ Categorical(initialDistribution)
+    // Transitions: 
+    for (int step : 1 ..< chain.size) {
+      chain.get(step) |
+        IntVar previous = chain.get(step - 1),
+        transitionProbabilities
+        ~ Categorical(
+          if (previous >= 0 && previous < transitionProbabilities.nRows)
+            transitionProbabilities.row(previous)
+          else 
+            transitionProbabilities.row(0) 
+        ) 
+    }
+  }
+}

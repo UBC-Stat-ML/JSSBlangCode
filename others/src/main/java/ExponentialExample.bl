@@ -1,0 +1,17 @@
+package others
+
+/** Exponential random variable. Values in \((0, \infty)\) */
+model ExponentialExample {
+  random RealVar realization
+  
+  /** The rate \(\lambda\), inversely proportional to the mean. \( \lambda > 0 \) */
+  param  RealVar rate
+  
+  laws {
+    realization | rate ~ Gamma(1.0, rate)
+  }
+  
+  generate (rand) {
+    rand.exponential(rate)
+  }
+}

@@ -1,0 +1,30 @@
+package others
+
+/*
+ * Please follow README.txt instructions first.
+ * To run this example:
+ * run others.PoissonPoissonMixtureExample as a Java application.
+ */
+model PoissonPoissonMixtureExample {
+
+  random List<IntVar> observations ?: #[1, 3, 2, 8, 9, 10]
+  random RealVar lambda1 ?: latentReal
+  random RealVar lambda2 ?: latentReal
+  random Simplex pi ?: latentSimplex(2)
+  laws {
+
+    pi ~ SymmetricDirichlet(2, 1)
+    lambda1 ~ Exponential(1.0/2.0)
+    lambda2 ~ Exponential(1.0/9.0)
+    for (int i : 0 ..< observations.size){
+      observations.get(i) | pi, lambda1, lambda2 
+        ~ IntMixtureExample(
+            pi, 
+            #[
+              Poisson::distribution(lambda1), 
+              Poisson::distribution(lambda2)
+             ]
+          )
+    }
+  }
+}

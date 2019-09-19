@@ -1,0 +1,27 @@
+package others
+
+/** Uniform random variable over a close interval \([m, M]\). */
+model ContinuousUniformExample {
+  random RealVar realization
+  
+  /** The left end point \(m\) of the interval. \(m \in (\infty, M)\) */
+  param  RealVar min
+  
+  /** The right end point of the interval. \(M \in (m, \infty)\) */
+  param  RealVar max
+  
+  laws {
+    logf(min, max) {
+      if (max - min <= 0.0) return NEGATIVE_INFINITY
+      return - log(max - min)
+    }
+    logf(realization, min, max) {
+      if (min <= realization && realization <= max) return 0.0
+      else return NEGATIVE_INFINITY
+    }
+  }
+  
+  generate(rand) {
+    rand.uniform(min, max)
+  }
+}
