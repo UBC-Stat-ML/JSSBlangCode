@@ -1,15 +1,13 @@
 package matchings
 
-import java.util.Collections
 import java.util.List
 import bayonet.distributions.Random
 import blang.core.LogScaleFactor
-import blang.distributions.Generators
 import blang.mcmc.ConnectedFactor
 import blang.mcmc.SampledVariable
 import blang.mcmc.Sampler
-import briefj.collections.UnorderedPair
-
+import static java.lang.Math.exp
+import static java.lang.Math.min
 /** 
  * Each time a Permutation is encountered in a Blang model, 
  * this sampler will be instantiated. 
@@ -28,18 +26,21 @@ class PermutationSampler implements Sampler {
 @ConnectedFactor List<LogScaleFactor> numericFactors
 
 override void execute(Random rand) {
-
-		var UnorderedPair<Integer, Integer> pair = Generators::distinctPair(rand, permutation.componentSize()) 
-		var double logDensityBefore = logDensity() 
-		Collections::swap(permutation.getConnections(), pair.getFirst(), pair.getSecond()) 
-		var double logDensityAfter = logDensity() 
-		var double acceptPr = Math::min(1.0, Math::exp(logDensityAfter - logDensityBefore)) 
-		if (Generators::bernoulli(rand, acceptPr)) {} 
-		else { 
-		    Collections::swap(permutation.getConnections(), pair.getFirst(), pair.getSecond())
-		}
-		
+	val n = permutation.componentSize
+	val i = rand.nextInt(n)
+	val j = rand.nextInt(n)
+	
+	val log_pi_current = logDensity()
+	permutation.swapConnections(i, j)
+	val log_pi_new = logDensity()
+	
+	val accept_prob = min(1.0, exp(log_pi_new - log_pi_current))
+	val accept_proposal = rand.nextBernoulli(accept_prob)
+	if (!accept_proposal) {
+		permutation.swapConnections(i, j)
 	}
+}
+
 def double logDensity() {
 		var double sum=0.0 
 		for (LogScaleFactor f : numericFactors) sum+=f.logDensity() 
