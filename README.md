@@ -1,1 +1,1 @@
-This repository contains the three blang model examples outlined in the JSS paper.
+This repository contains all the examples outlined in the Blang JSS submission.
