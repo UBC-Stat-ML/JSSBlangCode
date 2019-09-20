@@ -2,3 +2,11 @@
 *.blang-compilation
 benchmark/Blang/results
 .DS_Store
+others/.classpath
+others/.project
+others/.DS_Store
+others/bin/*
+others/.project
+others/.settings
+others/build
+others/.gradle
