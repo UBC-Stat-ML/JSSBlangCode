@@ -9,11 +9,9 @@ import matchings.Permutation
  */
 model ComplicatedModel {
 
-  random DenseMatrix obs ?: fixedMatrix(#[#[-4.4, 1.7, 5.4],
-                                          #[-0.3, 6.8, -5.0]])
-
   param Integer numPlayers ?: 3
   param Integer numGames   ?: 2
+  random DenseMatrix obs ?: latentMatrix(numGames, numPlayers)
 
   random List<RealVar> means ?: latentRealList(numPlayers)
   random List<Permutation> permutations ?: {
