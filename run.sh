@@ -5,11 +5,10 @@
 # mkdir RUN_DIR
 # cd RUN_DIR
 
-echo "Setting up the CLI"
-read -n 1 -s -r -p "Press any key to continue."
-echo
+
+
 # Unpack SDK and setup the CLI
-# cd ..
+echo "Setting up the CLI"
 tar -xzvf blangSDK-1.33.2.tar.gz
 cd blangSDK-1.33.2
 echo
@@ -17,11 +16,18 @@ source setup-cli.sh
 echo
 cd ../example
 
+echo "================================================="
+echo "Running Models in the examples subdirectory "
+echo "================================================="
+read -n 1 -s -r -p "Press any key to continue."
+echo
+
+
+echo
 # Run the Doomsday example
 echo "Running Doomsday"
 read -n 1 -s -r -p "Press any key to continue."
 echo
-cd example
 blang --model jss.Doomsday --model.rate 1.0 --model.y 1.2 --model.z NA
 
 

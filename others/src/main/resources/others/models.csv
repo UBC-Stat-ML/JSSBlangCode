@@ -5,4 +5,4 @@ ising,Classical Ising model at the critical point,others.IsingExample,
 markov-chain,Running Markov Chain Example,others.MarkovChainExample,
 plated-matrix,Plated Matrix Example,others.PlatedMatrixExample,--model.dims.maxSize 3 --model.replicates.maxSize 5
 poisson-mixture,Poisson Mixture Example,others.PoissonPoissonMixtureExample,
-permutation,Complicated Model Example using permutations,matchings.ComplicatedModel,--postProcessor DefaultPostProcessor
+permutation,Complicated Model Example using permutations,matchings.ComplicatedModel,--postProcessor DefaultPostProcessor --model.obs.file data/permutedObs.csv
