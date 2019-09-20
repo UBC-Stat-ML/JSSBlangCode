@@ -10,7 +10,7 @@ read -n 1 -s -r -p "Press any key to continue."
 echo
 # Unpack SDK and setup the CLI
 # cd ..
-tar -xzvf ../blangSDK-1.33.2.tar.gz
+tar -xzvf blangSDK-1.33.2.tar.gz
 cd blangSDK-1.33.2
 echo
 source setup-cli.sh
