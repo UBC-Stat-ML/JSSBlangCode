@@ -18,7 +18,6 @@ echo
 echo "Running Doomsday"
 read -n 1 -s -r -p "Press any key to continue."
 echo
-cd example
 blang --model jss.Doomsday --model.rate 1.0 --model.y 1.2 --model.z NA
 
 
