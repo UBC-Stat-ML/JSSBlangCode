@@ -1,8 +1,18 @@
+  
 plugins {
   id 'org.xtext.xtend' version '1.0.19'
   id 'org.xtext.builder' version '1.0.19'
   id 'java'
   id 'eclipse'
+  id 'application'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+dependencies {
+  xtextLanguages "ca.ubc.stat.blang:ca.ubc.stat.blang:4.0.0"
+  compile group: 'ca.ubc.stat', name: 'blangSDK', version: '1.33.2'
 }
 
 xtext {
@@ -12,22 +22,6 @@ xtext {
       fileExtension = 'bl'
       generator.outlet.producesJava = true
       generator.javaSourceLevel = '1.8'
-    }
-  }
-}
-
-eclipse { 
-  classpath {
-    defaultOutputDir = file('bin')
-  }
-  project {
-    resourceFilter {
-      appliesTo = 'FOLDERS'
-      type = 'EXCLUDE_ALL'
-      matcher {
-        id = 'org.eclipse.ui.ide.multiFilter'
-        arguments = '1.0-name-matches-false-false-nextflow'
-      }
     }
   }
 }
@@ -43,16 +37,13 @@ repositories {
   }
 }
 
-dependencies {
-  xtextLanguages "ca.ubc.stat.blang:ca.ubc.stat.blang:4.0.0"
-  compile group: 'ca.ubc.stat', name: 'blangSDK', version: '2.0.0'
-}
-
 xtend {
   generator {
     javaSourceLevel = 1.8
   }
 }
+
+mainClassName = "others.Main"
 
 test {
   testLogging {
