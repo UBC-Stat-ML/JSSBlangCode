@@ -8,6 +8,8 @@ import blang.mcmc.SampledVariable
 import blang.mcmc.Sampler
 import static java.lang.Math.exp
 import static java.lang.Math.min
+import static extension java.util.Collections.swap
+
 /** 
  * Each time a Permutation is encountered in a Blang model, 
  * this sampler will be instantiated. 
@@ -31,13 +33,13 @@ override void execute(Random rand) {
 	val j = rand.nextInt(n)
 	
 	val log_pi_current = logDensity()
-	permutation.swapConnections(i, j)
+	permutation.connections.swap(i,j)
 	val log_pi_new = logDensity()
 	
 	val accept_prob = min(1.0, exp(log_pi_new - log_pi_current))
 	val accept_proposal = rand.nextBernoulli(accept_prob)
 	if (!accept_proposal) {
-		permutation.swapConnections(i, j)
+		permutation.connections.swap(i, j)
 	}
 }
 

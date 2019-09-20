@@ -32,13 +32,6 @@ import static java.util.Collections.swap
    */
   def int componentSize() { 
     return connections.size
-  } 
-  
-  /**
-   * Swap values of index i and j in connections 
-   */
-  def swapConnections(int i, int j) {
-  	swap(connections, i, j)
   }
   
   override String toString() { 
