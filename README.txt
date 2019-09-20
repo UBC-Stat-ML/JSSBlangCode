@@ -14,6 +14,9 @@ and blangCLI tools and proceeds to run all the models
 in reproduction_material/example and 
 reproduction_material/others.
 
+Note that this must be run with 'source run.sh' to
+properly set up the blangCLI path.
+
 
 examples
 ====================================================
