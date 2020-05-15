@@ -1,0 +1,63 @@
+import static xlinear.MatrixOperations.*;
+import static xlinear.MatrixExtentions.*;
+
+
+model Italy{
+  param Integer alpha ?: 10
+  param Integer smin ?: -1
+  param Integer smax ?: 1
+  random RealVar lambda
+  random List<RealVar> intercept
+  random DenseMatrix Sigma, mu, pres, Z, diseases, zeroes, comorb_count
+  laws {
+	Sigma = dense(11, 11)
+	for (int i : 0..<10){
+	Sigma.set(i,i,1) 
+	}
+	for (int i : 0..<9){
+		for (int j : (i+1)..<10){
+		RealVar Sigmad ~ Beta(alpha, alpha)
+		Sigma.set(i,j, smin+Sigmad*(smin-smax))
+		}
+	}
+	for (int i : 1..<10){
+		for (int j : 0:(i-1)){
+		Sigma.set(i,j, Sigma.get(j,i))
+		}
+	}
+	lambda ~ Gamma(0.001,0.001)
+	intercept = latentRealList(11)
+	for (int i : 0..<10){
+	intercept(i) ~ Normal(0, 0.01)
+	}
+	mu = latentMatrix(710, 11) // 710 = # of patients, 11 = # of diseases
+	pres = latentMatrix(710, 11)
+	Z = latentMatrix(710,11)
+	for (int i: 0..<709){
+		for (int j: 0..<10){
+		mu.set(i,j,intercept[j])
+		}
+	}
+	for (int i: 0..<709){
+	Z[i,] | mu[i,], Sigma ~ MultivariateNormal(mu[i,], Sigma.solve())
+	}
+	for (int i: 0..<709){
+		for (int j: 0..<10){
+		if (Z[i,j]>=0)
+			pres.set(i,j,1)
+		else
+			pres.set(i,j,0)
+		}
+	}
+	diseases = latentVector(11)
+	zeroes = latentVector(710)
+	comorb_count = latentVector(710)
+	for (int i:0..<10){
+	diseases[i] | pres[,i] ~ Normal(sum(pres[,i], 0.01))
+	}
+	for (int i:0..<710){
+	comorb_count[i] | lambda ~ Poisson(lambda)
+	zeroes[i] | comorb_count[i], pres[i,] ~ Normal(sum(pres[i,])-comorb_count[i],0.01)
+	}
+	
+}
