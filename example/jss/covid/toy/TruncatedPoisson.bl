@@ -1,0 +1,29 @@
+package blang.distributions
+
+/** Poisson random variable. Values in \(0, 1, 2, \dots\) */
+model TruncatedPoisson {
+  random IntVar realization
+  
+  /** Mean parameter \(\lambda\). \(\lambda > 0\) */
+  param RealVar mean
+  
+  laws {
+    logf(realization, mean) {
+      if (mean <= 0) return NEGATIVE_INFINITY
+      if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
+      return realization * log(mean)
+    }
+    logf(mean) {
+      if (mean <= 0) return NEGATIVE_INFINITY
+      return - mean; 
+    }
+    logf(realization) {
+      if (realization < 0) return NEGATIVE_INFINITY
+      return - logFactorial(realization)
+    }
+  }
+  
+  generate(rand) {
+    rand.poisson(mean)
+  }
+}
