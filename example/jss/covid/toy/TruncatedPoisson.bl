@@ -5,13 +5,19 @@ model TruncatedPoisson {
   random IntVar realization
   
   /** Mean parameter \(\lambda\). \(\lambda > 0\) */
-  param RealVar mean
-  
+ param RealVar mean
+ random List<Double> factor ?: {
+ 	return new ArrayList(9) => [
+ 		for (int i : 3..<11){
+ 			add(exp(i * log(mean)))
+ 		}
+ 	]
+ }
   laws {
     logf(realization, mean) {
       if (mean <= 0) return NEGATIVE_INFINITY
       if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
-      return realization * log(mean)
+     return -log(factor.sum())+realization * log(mean)
     }
     logf(mean) {
       if (mean <= 0) return NEGATIVE_INFINITY
@@ -19,11 +25,12 @@ model TruncatedPoisson {
     }
     logf(realization) {
       if (realization < 0) return NEGATIVE_INFINITY
+      if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
       return - logFactorial(realization)
     }
   }
   
   generate(rand) {
-    rand.poisson(mean)
+    rand.truncatedPoisson(mean,3,11)
   }
 }

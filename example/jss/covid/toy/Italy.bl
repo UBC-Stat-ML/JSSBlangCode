@@ -9,55 +9,50 @@ model Italy{
   random List<RealVar> intercept ?: latentRealList(11)
   param Matrix Sigma ?: {
   	return identity(11) => [for (int i : 0..<9){
-		for (int j : (i+1)..<10){
-			set(i,j,Sigmad.getRealVar(i,j))
-			}
-			}
-		for (int i : 1..<10){
-		for (int j : 0..<(i-1)){
-		set(i,j,Sigmad.getRealVar(j,i))
-		}
-	}	
-			]
+								for (int j : (i+1)..<10){
+										set(i,j,Sigmad.getRealVar(i,j))
+				}
+			}	
+							for (int i : 1..<10){
+								for (int j : 0..<(i-1)){
+									set(i,j,Sigmad.getRealVar(j,i))
+				}
+			}	
+		]
   } 
   param Matrix mu ?: latentMatrix(710,11)
   random List<DenseMatrix> Z ?:{
-  	return new ArrayList(710)=> [
-  		for (int i: 0..<709){
-  			add(latentVector(11))
-  		}
-  	]
+  	return new ArrayList(710)=> [for (int i: 0..<709){
+  									add(latentVector(11))
+  			}
+  		]
   }
   param Matrix pres ?: {
-  	return dense(710,11) =>[
-  	for (int i: 0..<709){
-		for (int j: 0..<10){
-		if (Z.get(i).getRealVar(j)>=0)
-			set(i,j,1)
-		else
-			set(i,j,0)
-		}
-	}
-	
-	]
+  	return dense(710,11) =>[for (int i: 0..<709){
+								for (int j: 0..<10){
+									if (Z.get(i).getRealVar(j)>=0)
+										set(i,j,1)
+									else
+										set(i,j,0)
+				}
+			}
+		]
   }
   param Matrix sumC ?: {
-	return dense(11) => [
-		for (int i: 0..<10){
-			for (int j: 0..<709){
-				set(i, pres.get(j,i)+getRealVar(i))
+	return dense(11) => [for (int i: 0..<10){
+							for (int j: 0..<709){
+								set(i, pres.get(j,i)+getRealVar(i))
+				}
 			}
-		}
-	]  	
+		]  	
   }
   param Matrix sumR ?: {
-  	return dense(710) => [
-		for (int i: 0..<709){
-			for (int j: 0..<10){
-				set(i, pres.get(i,j)+getRealVar(i))
+  	return dense(710) => [for (int i: 0..<709){
+							for (int j: 0..<10){
+								set(i, pres.get(i,j)+getRealVar(i))
+				}
 			}
-		}
-	]  	
+		]  	
   }
   random List<RealVar> diseases
   random DenseMatrix zeroes ?: latentVector(710)
@@ -67,31 +62,31 @@ model Italy{
 		for (int j : (i+1)..<10){
 			Sigmad.get(i,j) | lambda ~  Beta(lambda,lambda)			
 			}
-			}		
+		}		
 	lambda ~ Gamma(0.001,0.001)
 	for (int i : 0..<10){
 	intercept.get(i) ~ Normal(0, 0.01)
-	}
+		}
 	for (int i: 0..<709){
 		for (int j: 0..<10){
 		mu.get(i,j) ~ Normal(0,0.01)
+			}
 		}
-	}
 	for (int i: 0..<709){
 	Z.get(i) | Matrix m = mu.row(i), Sigma ~ MultivariateNormal(m,Sigma.inverse().cholesky())
-	}
+		}
 	for (int i:0..<10){
 	diseases.get(i) | RealVar s = sumC.get(i) ~ Normal(s,0.01)
-	}
+		}
 	for (int i:0..<349){
 	comorb_count.get(i) | lambda ~ Poisson(lambda)
 	zeroes.get(i) | IntVar com = comorb_count.get(i), RealVar su = sumR.get(i) ~ Normal(su-com,0.01)
-	}
+		}
 	for (int i:350..<709){
 	comorb_count.get(i) | lambda ~ TruncatedPoisson(lambda)
 	zeroes.get(i) | IntVar com = comorb_count.get(i), RealVar su = sumR.get(i) ~ Normal(su-com,0.01)
+		}
 	}
-}
 }
 
 	
