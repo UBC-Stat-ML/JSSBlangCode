@@ -6,18 +6,18 @@ model TruncatedPoisson {
   
   /** Mean parameter \(\lambda\). \(\lambda > 0\) */
  param RealVar mean
- random List<Double> factor ?: {
- 	return new ArrayList(9) => [
- 		for (int i : 3..<11){
- 			add(exp(i * log(mean)))
- 		}
- 	]
- }
+  
   laws {
     logf(realization, mean) {
       if (mean <= 0) return NEGATIVE_INFINITY
       if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
-     return -log(factor.sum())+realization * log(mean)
+      val factor = new ArrayList(9) => [
+ 		for (int i : 3..<11){
+ 			add(exp(i * log(mean)))
+ 		}
+ 	]
+      val sumF=-log(factor.sum())
+     return sumF+realization * log(mean)
     }
     logf(mean) {
       if (mean <= 0) return NEGATIVE_INFINITY
