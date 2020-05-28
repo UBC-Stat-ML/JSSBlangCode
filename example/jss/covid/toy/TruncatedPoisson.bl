@@ -11,12 +11,7 @@ model TruncatedPoisson {
     logf(realization, mean) {
       if (mean <= 0) return NEGATIVE_INFINITY
       if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
-      val factor = new ArrayList(9) => [
- 		for (int i : 3..<11){
- 			add(exp(i * log(mean)))
- 		}
- 	]
-      val sumF=-log(factor.sum())
+      val double sumF = (3..11).map(int i | exp(i * log(mean))/factorial(i)).sum()
      return sumF+realization * log(mean)
     }
     logf(mean) {
