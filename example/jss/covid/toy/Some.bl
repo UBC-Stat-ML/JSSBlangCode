@@ -1,0 +1,35 @@
+package blang.validation.internals.fixtures
+
+model Some{
+param Matrix Sigma ?: {
+  	return dense(11,11) => [for (int i : 0..<11){
+								for (int j : 0..<11){
+									if (i==j){
+										set(i,j,1.0)
+									}
+										else {
+											set(i,j,2.0)
+										}
+				}
+			}			
+		]
+  }  
+ 
+ param Matrix mu ?: latentMatrix(710,11)
+  random List<DenseMatrix> Z ?:{
+  	return new ArrayList(710)=> [for (int i: 0..<710){
+  									add(latentVector(11))
+  			}
+  		]
+  }  
+  laws{
+	for (int i: 0..<710){
+		for (int j: 0..<11){
+		mu.get(i,j) ~ Normal(0,0.01)
+			}
+		}
+	for (int i: 0..<710){
+	Z.get(i) | Matrix m = mu.row(i), CholeskyDecomposition abc = Sigma.cholesky() ~ MultivariateNormal(m,abc)
+		}
+  }
+}  

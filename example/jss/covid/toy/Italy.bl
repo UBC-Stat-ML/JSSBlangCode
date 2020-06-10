@@ -1,14 +1,18 @@
-package blang.project.toy 
+package blang.validation.internals.fixtures
 
 model Italy{
   param Integer alpha ?: 10
   param Integer smin ?: -1
   param Integer smax ?: 1
   param Matrix Sigmad ?: identity(11)
-  random RealVar lambda
+  random RealVar lambda ?: 0.0
   random List<RealVar> intercept ?: latentRealList(11)
   param Matrix Sigma ?: {
-  	return identity(11) => [for (int i : 0..<9){
+  	return dense(11,11) => [for (int i : 0..<10){
+								for (int j : 0..<10){
+										set(i,j,1.0)
+				}
+			}				for (int i : 0..<9){
 								for (int j : (i+1)..<10){
 										set(i,j,Sigmad.getRealVar(i,j))
 				}
@@ -54,16 +58,16 @@ model Italy{
 			}
 		]  	
   }
-  random List<RealVar> diseases
+  random List<RealVar> diseases ?: latentRealList(11)
   random DenseMatrix zeroes ?: latentVector(710)
-  param List<IntVar> comorb_count
+  param List<IntVar> comorb_count ?: latentIntList(710)
   laws {
 	for (int i : 0..<9){
 		for (int j : (i+1)..<10){
 			Sigmad.get(i,j) | lambda ~  Beta(lambda,lambda)			
 			}
 		}		
-	lambda ~ Gamma(0.001,0.001)
+	lambda ~ Gamma(2,2)
 	for (int i : 0..<10){
 	intercept.get(i) ~ Normal(0, 0.01)
 		}
@@ -83,7 +87,7 @@ model Italy{
 	zeroes.get(i) | IntVar com = comorb_count.get(i), RealVar su = sumR.get(i) ~ Normal(su-com,0.01)
 		}
 	for (int i:350..<709){
-	comorb_count.get(i) | lambda ~ TruncatedPoisson(lambda)
+	comorb_count.get(i) | lambda ~ TruncatedPoisson(lambda,3,11)
 	zeroes.get(i) | IntVar com = comorb_count.get(i), RealVar su = sumR.get(i) ~ Normal(su-com,0.01)
 		}
 	}

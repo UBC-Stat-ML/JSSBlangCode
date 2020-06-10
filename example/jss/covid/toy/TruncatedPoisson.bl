@@ -6,26 +6,29 @@ model TruncatedPoisson {
   
   /** Mean parameter \(\lambda\). \(\lambda > 0\) */
  param RealVar mean
+ param IntVar max
+ param IntVar min
   
   laws {
-    logf(realization, mean) {
+    logf(realization, mean, max, min) {
       if (mean <= 0) return NEGATIVE_INFINITY
-      if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
-      val double sumF = (3..11).map(int i | exp(i * log(mean))/factorial(i)).sum()
+      if (realization < min || realization > max) return NEGATIVE_INFINITY
+      if (min>max) return NEGATIVE_INFINITY
+      val double sumF = (min..max).map(int i | exp(i * log(mean))/factorial(i)).sum()
      return sumF+realization * log(mean)
     }
     logf(mean) {
       if (mean <= 0) return NEGATIVE_INFINITY
       return - mean; 
     }
-    logf(realization) {
+    logf(realization, min, max) {
       if (realization < 0) return NEGATIVE_INFINITY
-      if (realization < 3 || realization > 11) return NEGATIVE_INFINITY
-      return - logFactorial(realization)
+      if (realization < min || realization > max) return NEGATIVE_INFINITY
+      return -logFactorial(realization)
     }
   }
   
   generate(rand) {
-    rand.truncatedPoisson(mean,3,11)
+    rand.truncatedPoisson(mean,min,max)
   }
 }
