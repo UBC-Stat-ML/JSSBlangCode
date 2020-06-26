@@ -25,6 +25,7 @@ well as their corresponding datasets, which are used
 in the manuscript to display results:
 
 - Doomsday.bl
+- MixtureModel.bl
 - SpikeSlabClassification.bl
 - Rockets.bl
 - PhylogeneticTree.bl

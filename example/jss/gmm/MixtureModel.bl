@@ -1,0 +1,35 @@
+package jss.gmm
+
+model MixtureModel { 
+  
+  random  List<RealVar>  observations 
+  random  List<IntVar>   clusterIndicators  ?:  latentIntList(observations.size) 
+  random  Simplex        pi                 ?:  latentSimplex(2)
+  random  List<RealVar>  means              ?:  latentRealList(2), 
+                         variances          ?:  latentRealList(2)
+  param   Matrix         concentration      ?:  fixedVector(1.0, 1.0)
+  
+  laws {
+     
+    pi | concentration ~ Dirichlet(concentration)
+    
+    // priors on each mixture component mean and variance
+    for (int mixIdx : 0 ..< means.size) { 
+      means.get(mixIdx)     ~ Normal(0.0, 1.0)
+      variances.get(mixIdx) ~ Gamma(1.0, 1.0)
+    }
+    
+    for (int obsIdx : 0 ..< observations.size) {
+      // prior over mixture indicators
+      clusterIndicators.get(obsIdx) | pi ~ Categorical(pi)
+      // likelihood:
+      observations.get(obsIdx) |
+        means, variances, 
+        IntVar curIndic = clusterIndicators.get(obsIdx)
+        ~ Normal(
+          means.get(curIndic),
+          variances.get(curIndic) 
+        )
+    }
+  }
+}

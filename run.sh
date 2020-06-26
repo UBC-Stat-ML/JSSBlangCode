@@ -29,8 +29,18 @@ echo "Running Doomsday"
 read -n 1 -s -r -p "Press any key to continue."
 echo
 blang --model jss.Doomsday --model.rate 1.0 --model.y 1.2 --model.z NA
+echo
 
+echo "Running MixtureModel"
+read -n 1 -s -r -p "Press any key to continue"
+echo
+blang --model jss.gmm.MixtureModel \
+  --model.observations file data/mixture_model/observations.txt \
+  --engine PT \
+  --engine.nChains 20 \
+  --postProcessor DefaultPostProcessor
 
+echo
 echo "Running PhylogeneticTree"
 read -n 1 -s -r -p "Press any key to continue."
 echo
@@ -41,6 +51,7 @@ blang --model jss.phylo.PhylogeneticTree \
    --engine.random 1
 
 
+echo
 echo "Running SpikeSlabClassification"
 read -n 1 -s -r -p "Press any key to continue."
 echo
@@ -55,6 +66,7 @@ blang --model jss.glms.SpikeSlabClassification \
    --postProcessor DefaultPostProcessor
 
 
+echo
 echo "Running Rocket"
 read -n 1 -s -r -p "Press any key to continue."
 echo
