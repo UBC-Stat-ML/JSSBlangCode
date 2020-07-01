@@ -12,6 +12,7 @@ import org.apache.commons.math3.distribution.LaplaceDistribution;
 import org.apache.commons.math3.distribution.LogisticDistribution;
 import org.apache.commons.math3.distribution.PoissonDistribution;
 import org.apache.commons.math3.distribution.TDistribution;
+import org.apache.commons.math3.distribution.UniformRealDistribution;
 
 import bayonet.math.NumericalUtils;
 import blang.types.DenseSimplex;
@@ -37,25 +38,14 @@ public class Generators // Warning: blang.distributions.Generators hard-coded in
 		      if (sample < lower) return 0;
 		      if (sample > upper) throw new RuntimeException("Overflow in truncated Poisson generation");
 		      return (int) sample;
-		}
-		int a = new PoissonDistribution(generator(rand), mean, PoissonDistribution.DEFAULT_EPSILON, PoissonDistribution.DEFAULT_MAX_ITERATIONS).sample();
-		while (true) {
-			if (a+lower-mean > 0) {
-				if (Math.ceil(a+lower-mean) <=lower-1|| Math.floor(a+lower-mean) >= upper+1) {
-			a = new PoissonDistribution(generator(rand), mean, PoissonDistribution.DEFAULT_EPSILON, PoissonDistribution.DEFAULT_MAX_ITERATIONS).sample();
-			}
-				else break;
-			}
-			else {
-				if (a <=lower-1 || a >= upper+1) {
-					a = new PoissonDistribution(generator(rand), mean, PoissonDistribution.DEFAULT_EPSILON, PoissonDistribution.DEFAULT_MAX_ITERATIONS).sample();
-			}
-				else break;
-		}
-		}
-		return a;
+		    }
+		PoissonDistribution a = new PoissonDistribution(generator(rand), mean, PoissonDistribution.DEFAULT_EPSILON, PoissonDistribution.DEFAULT_MAX_ITERATIONS);
+		double b = a.cumulativeProbability(lower);
+		double c = a.cumulativeProbability(upper);
+		double u = uniform(rand,b,c);
+		int p = a.inverseCumulativeProbability(u);
+		return p;
 	}
-	 
     /** */
     public static int betaBinomial(Random random, double alpha, double beta, int numberOfTrials)
     {
