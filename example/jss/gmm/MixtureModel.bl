@@ -3,7 +3,7 @@ package jss.gmm
 model MixtureModel { 
   
   random  List<RealVar>  observations 
-  random  List<IntVar>   clusterIndicators  ?:  latentIntList(observations.size) 
+  random  List<IntVar>   labels  ?:  latentIntList(observations.size) 
   random  Simplex        pi                 ?:  latentSimplex(2)
   random  List<RealVar>  means              ?:  latentRealList(2), 
                          variances          ?:  latentRealList(2)
@@ -21,11 +21,11 @@ model MixtureModel {
     
     for (int obsIdx : 0 ..< observations.size) {
       // prior over mixture indicators
-      clusterIndicators.get(obsIdx) | pi ~ Categorical(pi)
+      labels.get(obsIdx) | pi ~ Categorical(pi)
       // likelihood:
       observations.get(obsIdx) |
         means, variances, 
-        IntVar curIndic = clusterIndicators.get(obsIdx)
+        IntVar curIndic = labels.get(obsIdx)
         ~ Normal(
           means.get(curIndic),
           variances.get(curIndic) 
