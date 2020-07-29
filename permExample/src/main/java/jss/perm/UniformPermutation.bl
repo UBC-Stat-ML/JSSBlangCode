@@ -1,0 +1,17 @@
+package jss.perm
+
+/**
+ * The uniform distribution over permutations. 
+ */
+model UniformPermutation {
+  random Permutation permutation 
+  
+  laws {
+    logf(permutation) {
+      - logFactorial(permutation.componentSize)
+    }
+  }
+  generate(rand) {
+    permutation.sampleUniform(rand)
+  }
+}
