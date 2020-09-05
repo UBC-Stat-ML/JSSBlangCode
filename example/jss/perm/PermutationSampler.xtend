@@ -6,6 +6,7 @@ import blang.core.LogScaleFactor
 import blang.mcmc.ConnectedFactor
 import blang.mcmc.SampledVariable
 import blang.mcmc.Sampler
+import blang.distributions.Generators
 import static java.lang.Math.exp
 import static java.lang.Math.min
 import static extension java.util.Collections.swap
@@ -28,24 +29,24 @@ class PermutationSampler implements Sampler {
 @ConnectedFactor List<LogScaleFactor> numericFactors
 
 override void execute(Random rand) {
-	val n = permutation.componentSize
-	val i = rand.nextInt(n)
-	val j = rand.nextInt(n)
-	
-	val log_pi_current = logDensity()
-	permutation.connections.swap(i,j)
-	val log_pi_new = logDensity()
-	
-	val accept_prob = min(1.0, exp(log_pi_new - log_pi_current))
-	val accept_proposal = rand.nextBernoulli(accept_prob)
-	if (!accept_proposal) {
-		permutation.connections.swap(i, j)
-	}
+  val n = permutation.componentSize
+  val i = Generators.discreteUniform(rand, 0, n)
+  val j = Generators.discreteUniform(rand, 0, n)
+  
+  val currentLogDensity = logDensity()
+  permutation.connections.swap(i,j)
+  val newLogDensity = logDensity()
+  
+  val acceptProb = min(1.0, exp(newLogDensity - currentLogDensity))
+  val accept = Generators.bernoulli(rand, acceptProb)
+  if (!accept) {
+    permutation.connections.swap(i, j)
+  }
 }
 
 def double logDensity() {
-		var double sum=0.0 
-		for (LogScaleFactor f : numericFactors) sum+=f.logDensity() 
-		return sum 
-	}
+  var double sum = 0.0 
+  for (LogScaleFactor f : numericFactors) sum += f.logDensity() 
+  return sum 
+  }
 }

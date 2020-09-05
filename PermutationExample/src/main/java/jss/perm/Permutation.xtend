@@ -5,8 +5,6 @@ import blang.mcmc.Samplers
 import java.util.Random
 import static java.util.Collections.sort
 import static java.util.Collections.shuffle
-import blang.inits.experiments.tabwriters.TidilySerializable
-import blang.inits.experiments.tabwriters.TidySerializer.Context
 import java.util.List
 
 /**
@@ -21,7 +19,7 @@ import java.util.List
  * (see the xtend documentation for details). 
  */
 @Samplers(PermutationSampler)
-@Data class Permutation implements TidilySerializable {
+@Data class Permutation {
   /**
    * Assume the vertices are indexed 0, 1, ..., N in the first bipartite component, and 
    * also 0, 1, 2, .., N in the second bipartite component. 
@@ -49,13 +47,6 @@ import java.util.List
     return connections.toString
   }
   
-  /**
-   * Used to output samples into a tidy format. 
-   */
-  override void serialize(Context context) {
-    for (int i : 0 ..< componentSize)
-      context.recurse(connections.get(i), "permutation_index", i)
-  } 
   /**
    * Sample an independent uniform permutation in place.
    */

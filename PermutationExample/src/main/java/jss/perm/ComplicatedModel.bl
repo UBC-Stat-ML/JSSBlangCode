@@ -1,7 +1,5 @@
 package jss.perm
 
-import jss.perm.Permutation
-
 /*
  * Please follow README.txt instructions first.
  * To run this example:
