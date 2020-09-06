@@ -11,44 +11,32 @@ import blang.runtime.internals.objectgraph.GraphAnalysis
 import blang.runtime.Observations
 import blang.types.ExtensionUtils
 
-class TestComplicatedModel {
+class TestCompositeModel {
   
   // Create some fake observations.
-  val static obs = {
-    val result = latentMatrix(2, 3)
-    ExtensionUtils.setTo(result, 
-      fixedMatrix(#[
-        #[-4.4, 1.7, 5.4],
-        #[-0.3, 6.8, -5.0]
-        ])
-    )
-    result
-  }
-
+  val static y = fixedRealList(1.4, 2.1, -0.3)
   // Instantiating our model with a builder.
   // To apply linear algebra tests, we need a fully-discrete model:
   // thus we fix our mean parameters.
-  val static ComplicatedModel complicatedModel = new ComplicatedModel.Builder()
-    .setNumPlayers(3)
-    .setNumGames(2)
-    .setMeans(fixedRealList(-5.0, 0.0, 5.0))
-    .setObs(obs)
+  val static jss.perm.CompositeModel compositeModel = new jss.perm.CompositeModel.Builder()
+    .setY(y)
+    .setPermutation(new jss.perm.Permutation(3))
     .build
 
   // Turn our synthetic data into type Observation, as required by Blang's architecture
   val static observations = {
     val Observations result = new Observations
-    result.markAsObserved(obs)
+    result.markAsObserved(y)
     result
   }
 
   // Instantiate a DiscreteMCTest
   val static DiscreteMCTest test = 
     new DiscreteMCTest(
-      new SampledModel(new GraphAnalysis(complicatedModel, observations)),
+      new SampledModel(new GraphAnalysis(compositeModel, observations)),
       [
-        val ComplicatedModel clustering = model as ComplicatedModel
-        return new Cloner().deepClone(clustering.permutations)
+        val jss.perm.CompositeModel cm = model as jss.perm.CompositeModel
+        return new Cloner().deepClone(cm.permutation)
       ]
     ) 
 
@@ -62,7 +50,7 @@ class TestComplicatedModel {
   @Test 
   def void stateSize() {
     test.verbose = true
-    test.checkStateSpaceSize(pow(factorial(3), 2) as int)
+    test.checkStateSpaceSize(factorial(3) as int)
   }
   
   @Test
