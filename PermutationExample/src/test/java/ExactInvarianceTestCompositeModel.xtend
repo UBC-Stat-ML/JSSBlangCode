@@ -6,7 +6,7 @@ import blang.validation.Instance
 
 class ExactInvarianceTestCompositeModel {
   
-  val static jss.perm.CompositeModel compositeModel = new jss.perm.CompositeModel.Builder()
+  val static CompositeModel compositeModel = new CompositeModel.Builder()
     .build
   val static test = new ExactInvarianceTest => [
     nPosteriorSamplesPerIndep = 1000

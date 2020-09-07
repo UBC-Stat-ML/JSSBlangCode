@@ -17,10 +17,9 @@ class TestCompositeModel {
   val static y = fixedRealList(1.4, 2.1, -0.3)
   // Instantiating our model with a builder.
   // To apply linear algebra tests, we need a fully-discrete model:
-  // thus we fix our mean parameters.
-  val static jss.perm.CompositeModel compositeModel = new jss.perm.CompositeModel.Builder()
+  val static CompositeModel compositeModel = new CompositeModel.Builder()
     .setY(y)
-    .setPermutation(new jss.perm.Permutation(3))
+    .setPermutation(new Permutation(3))
     .build
 
   // Turn our synthetic data into type Observation, as required by Blang's architecture
@@ -35,7 +34,7 @@ class TestCompositeModel {
     new DiscreteMCTest(
       new SampledModel(new GraphAnalysis(compositeModel, observations)),
       [
-        val jss.perm.CompositeModel cm = model as jss.perm.CompositeModel
+        val CompositeModel cm = model as CompositeModel
         return new Cloner().deepClone(cm.permutation)
       ]
     ) 
