@@ -1,34 +1,32 @@
 package jss.gmm
 
-model MixtureModel { 
-  
-  random  List<RealVar>  observations 
-  random  List<IntVar>   labels  ?:  latentIntList(observations.size) 
-  random  Simplex        pi                 ?:  latentSimplex(2)
-  random  List<RealVar>  means              ?:  latentRealList(2)
-  random  List<RealVar>  variances          ?:  latentRealList(2)
-  param   Matrix         concentration      ?:  fixedVector(1.0, 1.0)
-  
+model MixtureModel {
+
+  random List<RealVar> y
+  param  Integer       n  ?: y.size
+  param  Matrix        a  ?: fixedVector (1.0 , 1.0)
+  random List<IntVar>  z  ?: latentIntList(n)
+
+  param  Integer       K  ?: 2
+  random Simplex       pi ?: latentSimplex(K)
+  random List<RealVar> mu ?: latentRealList(K)
+  random List<RealVar> sd ?: latentRealList(K)
+
   laws {
-     
-    pi | concentration ~ Dirichlet(concentration)
-    
-    for (int mixIdx : 0 ..< means.size) { 
-      means.get(mixIdx)     ~ Normal(0.0, pow(10,2.0))
-      variances.get(mixIdx) ~ ContinuousUniform(0.0, 10.0)
-    }
-    
-    for (int obsIdx : 0 ..< observations.size) {
 
-      labels.get(obsIdx) | pi ~ Categorical(pi)
+    pi | a ~ Dirichlet ( a )
 
-      observations.get(obsIdx) |
-        means, variances, 
-        IntVar curIndic = labels.get(obsIdx)
-        ~ Normal(
-          means.get(curIndic),
-          variances.get(curIndic)
-        )
+    for (int k : 0 ..< K) {
+      mu. get (k) ~ Normal(0.0, 100.0)
+      sd. get (k) ~ ContinuousUniform(0.0 ,10.0)
     }
+
+    for ( int i : 0 ..< n) {
+      z.get(i) | pi ~ Categorical(pi)
+      y.get(i) | mu, sd, IntVar k = z.get(i)
+        ~ Normal(mu.get(k) , pow(sd.get(k), 2.0))
+    }
+
   }
+
 }
