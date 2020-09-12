@@ -1,1 +1,1 @@
-com.github.alexandrebouchard:conifer:2.0.4
+com.github.ubc-stat-ml:conifer:2.0.4

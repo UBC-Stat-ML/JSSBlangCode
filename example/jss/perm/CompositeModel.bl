@@ -1,0 +1,12 @@
+package jss.perm
+
+model CompositeModel {
+  random Permutation permutation ?: new Permutation(3)
+  random List<RealVar> y ?: fixedRealList(2.1,-0.3,0.8)
+  laws {
+    permutation ~ UniformPermutation
+    y.get(0) | Integer index = permutation.getConnections.get(0) ~ Normal(index, 0.3)	
+    y.get(1) | Integer index = permutation.getConnections.get(1) ~ Normal(index, 0.3)	
+    y.get(2) | Integer index = permutation.getConnections.get(2) ~ Normal(index, 0.3)	
+  }
+}

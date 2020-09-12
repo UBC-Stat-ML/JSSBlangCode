@@ -1,0 +1,33 @@
+package jss.hier
+
+model Rocket {
+
+  param GlobalDataSource data
+
+  param Plate<String> countries
+  param Plate<String> rockets
+
+  random Plated<RealVar> alpha
+  random Plated<RealVar> beta
+  random Plated<RealVar> prob
+  random Plated<IntVar> nFails
+  param Plated<Integer> nLaunches
+
+  laws {
+    for(Index<String> c : countries.indices()){
+      alpha.get(c) ~ Gamma(1,1)
+      beta.get(c) ~ Gamma(1,1)
+
+      for(Index<String> r : rockets.indices(c)){
+        prob.get(r, c) | 
+          RealVar a = alpha.get(c),
+          RealVar b = beta.get(c) 
+          ~ Beta(a, b)
+        nFails.get(c, r) | 
+          RealVar p = prob.get(r, c),
+          Integer n = nLaunches.get(r, c) 
+          ~ Binomial(n, p)
+      }
+    }
+  }
+}

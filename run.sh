@@ -9,8 +9,8 @@
 
 # Unpack SDK and setup the CLI
 echo "Setting up the CLI"
-tar -xzvf blangSDK-2.9.2.tar.gz
-cd blangSDK-2.9.2
+tar -xzvf blangSDK-2.10.0.tar.gz
+cd blangSDK-2.10.0
 echo
 source setup-cli.sh
 echo
@@ -36,35 +36,21 @@ echo "Running MixtureModel"
 read -n 1 -s -r -p "Press any key to continue"
 echo
 blang --model jss.gmm.MixtureModel \
-  --model.observations file data/mixture_model/observations.txt \
+  --model.y file data/obs1.txt \
   --engine PT \
-  --engine.nChains 48 \
-  --engine.nScans 5000 \
+  --engine.nChains 36 \
+  --engine.nScans 30000 \
   --postProcessor DefaultPostProcessor
 
 
 echo "Running Permutation example"
 read -n 1 -s -r -p "Press any key to continue"
 echo
-blang --model jss.perm.ComplicatedModel \
+blang --model jss.perm.CompositeModel \
   --engine PT \
-  --engine.nChains 48 \
+  --engine.nChains 12 \
   --engine.nScans 5000
 
-
-#echo
-#echo "Running SpikeSlabClassification"
-#read -n 1 -s -r -p "Press any key to continue."
-#echo
-#blang --model jss.glms.SpikeSlabClassification \
-#   --model.data data/titanic/titanic-covariates.csv \
-#   --model.instances.name Name \
-#   --model.instances.maxSize 200 \
-#   --model.labels.dataSource data/titanic/titanic.csv \
-#   --model.labels.name Survived \
-#   --engine PT \
-#   --engine.nChains 20 \
-#   --postProcessor DefaultPostProcessor
 
 
 echo
@@ -74,20 +60,31 @@ echo
 blang --model jss.hier.Rocket \
        	--model.data data/rockets.csv \
        	--model.countries.name Country \
-	--model.rockets.name Rockets \
-       	--model.nLaunches.name nLaunches \
-	--model.nFails.name nFails
+	--model.rockets.name Rocket \
 
 
-#echo
-#echo "Running PhylogeneticTree"
-#read -n 1 -s -r -p "Press any key to continue."
-#echo
-#blang --model jss.phylo.PhylogeneticTree \
-#   --model.observations.file data/primates.fasta \
-#   --model.observations.encoding DNA \
-#   --engine PT \
-#   --engine.random 1
+echo
+echo "Running PhylogeneticTree"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.phylo.PhylogeneticTree \
+   --model.observations.file data/primates.fasta \
+   --model.observations.encoding DNA 
+
+
+echo
+echo "Running SpikeSlabClassification"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.glms.SpikeSlabClassification \
+   --model.data data/titanic/titanic-covariates.csv \
+   --model.instances.name Name \
+   --model.instances.maxSize 200 \
+   --model.labels.dataSource data/titanic/titanic.csv \
+   --model.labels.name Survived \
+   --engine PT \
+   --engine.nChains 12 \
+   --postProcessor DefaultPostProcessor
 
 
 echo
@@ -110,7 +107,7 @@ echo
 ./gradlew installDist
 
 
-models=(uniform exponential ising markov-chain plated-matrix poisson-mixture permutation)
+models=(uniform exponential ising markov-chain plated-matrix poisson-mixture)
 
 echo
 echo
@@ -146,8 +143,8 @@ echo
 echo "================================================="
 echo "Now running:"
 echo
-echo "1. ExactInvarianceTestComplicatedModel.xtend"
-echo "2. TestComplicatedModel.xtend "
+echo "1. ExactInvarianceTestCompositeModel.xtend"
+echo "2. TestCompositeModel.xtend "
 echo "================================================="
 read -n 1 -s -r -p "Press any key to continue."
 echo

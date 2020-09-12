@@ -26,9 +26,10 @@ in the manuscript to display results:
 
 - Doomsday.bl
 - MixtureModel.bl
-- SpikeSlabClassification.bl
+- CompositeModel.bl
 - Rockets.bl
 - PhylogeneticTree.bl
+- SpikeSlabClassification.bl
 
 In order to run an individual model and with 
 arguments different to those used within the 
