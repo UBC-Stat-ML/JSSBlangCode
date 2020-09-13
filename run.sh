@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Requires a UNIX-compatible environment running bash, and git software.
+# MixtureModel and SpikeSlabClassification examples require R with packages "dplyr" and "ggplot2" if DefaultPostProcessor is used.
 
 
 # Unpack SDK and setup the CLI
@@ -29,6 +30,8 @@ echo
 
 echo
 echo "Running MixtureModel"
+echo "By default, the DefaultPostProcessor is used:"
+echo "R with packages 'dplyr' and 'ggplot2' is required."
 read -n 1 -s -r -p "Press any key to continue"
 echo
 blang --model jss.gmm.MixtureModel \
@@ -61,6 +64,8 @@ blang --model jss.hier.Rocket \
 
 echo
 echo "Running PhylogeneticTree"
+echo "Internet connection required to demonstrate"
+echo "importing third party libraries via GitHub"
 read -n 1 -s -r -p "Press any key to continue."
 echo
 blang --model jss.phylo.PhylogeneticTree \
@@ -70,6 +75,8 @@ blang --model jss.phylo.PhylogeneticTree \
 
 echo
 echo "Running SpikeSlabClassification"
+echo "By default, the DefaultPostProcessor is used:"
+echo "R with packages 'dplyr' and 'ggplot2' is required."
 read -n 1 -s -r -p "Press any key to continue."
 echo
 blang --model jss.glms.SpikeSlabClassification \
@@ -125,3 +132,17 @@ echo "Running PoissonPoissonMixture"
 read -n 1 -s -r -p "Press any key to continue."
 echo
 blang --model jss.others.PoissonPoissonMixtureExample
+
+
+echo
+echo "Running Tests for CompositeModel"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+cd ../
+mv PermutationExample tmp
+create-blang-gradle-project --name PermutationExample
+rm -r PermutationExample/src
+mv tmp/src PermutationExample/
+cd PermutationExample
+./gradlew clean
+./gradlew test
