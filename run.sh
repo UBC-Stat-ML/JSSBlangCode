@@ -9,8 +9,8 @@
 
 # Unpack SDK and setup the CLI
 echo "Setting up the CLI"
-tar -xzvf blangSDK-2.10.0.tar.gz
-cd blangSDK-2.10.0
+tar -xzvf blangSDK-2.10.3.tar.gz
+cd blangSDK-2.10.3
 echo
 source setup-cli.sh
 echo
@@ -24,7 +24,6 @@ echo
 
 
 echo
-# Run the Doomsday example
 echo "Running Doomsday"
 read -n 1 -s -r -p "Press any key to continue."
 echo
