@@ -1,4 +1,4 @@
-package others
+package jss.others
 
 import briefj.collections.UnorderedPair
 import static blang.validation.internals.fixtures.Functions.squareIsingEdges

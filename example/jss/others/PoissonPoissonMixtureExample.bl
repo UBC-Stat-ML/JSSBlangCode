@@ -1,9 +1,9 @@
-package others
+package jss.others
 
 /*
  * Please follow README.txt instructions first.
  * To run this example:
- * run others.PoissonPoissonMixtureExample as a Java application.
+ * run jss.others.PoissonPoissonMixtureExample as a Java application.
  */
 model PoissonPoissonMixtureExample {
 

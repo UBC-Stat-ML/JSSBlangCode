@@ -1,4 +1,4 @@
-package others
+package jss.others
 
 /** Not really a distribution, but rather a way to handle undirected model (AKA random fields). See Ising under the Examples page. */
 /*

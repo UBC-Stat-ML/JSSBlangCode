@@ -2,10 +2,6 @@
 
 # Requires a UNIX-compatible environment running bash, and git software.
 
-# mkdir RUN_DIR
-# cd RUN_DIR
-
-
 
 # Unpack SDK and setup the CLI
 echo "Setting up the CLI"
@@ -31,6 +27,7 @@ blang --model jss.Doomsday --model.rate 1.0 --model.y 1.2 --model.z NA
 echo
 
 
+echo
 echo "Running MixtureModel"
 read -n 1 -s -r -p "Press any key to continue"
 echo
@@ -42,6 +39,7 @@ blang --model jss.gmm.MixtureModel \
   --postProcessor DefaultPostProcessor
 
 
+echo
 echo "Running Permutation example"
 read -n 1 -s -r -p "Press any key to continue"
 echo
@@ -49,7 +47,6 @@ blang --model jss.perm.CompositeModel \
   --engine PT \
   --engine.nChains 12 \
   --engine.nScans 5000
-
 
 
 echo
@@ -87,66 +84,44 @@ blang --model jss.glms.SpikeSlabClassification \
 
 
 echo
-echo
-
-echo "================================================="
-echo "Now swapping to run models in subdirectory others "
-echo "================================================="
-read -n 1 -s -r -p "Press any key to continue."
-
-cd ../others
-
-echo
-
-echo "================================================="
-echo "Setting up gradle project"
-echo "================================================="
-echo
-./gradlew clean
-./gradlew installDist
-
-
-models=(uniform exponential ising markov-chain plated-matrix poisson-mixture)
-
-echo
-echo
-
-echo "================================================="
-echo "================================================="
-echo
-echo " Available models are will be listed below. Use  "
-echo " command: 'build/install/others/bin/others name  "
-echo
-echo "================================================="
-echo "================================================="
-read -n 1 -s -r -p "Press any key to continue."
-
-echo
-for item in ${models[@]}
-do
-  echo
-  echo
-  echo "================================================="
-  echo "Running Model " $item
-  echo "================================================="
-  read -n 1 -s -r -p "Press any key to continue."
-  echo
-  build/install/others/bin/others $item
-done
-
-echo "All models ran successfully."
-
-echo
-echo
-
-echo "================================================="
-echo "Now running:"
-echo
-echo "1. ExactInvarianceTestCompositeModel.xtend"
-echo "2. TestCompositeModel.xtend "
-echo "================================================="
+echo "Running ContinuousUniformExample"
 read -n 1 -s -r -p "Press any key to continue."
 echo
+blang --model jss.others.ContinuousUniformExample --model.min 0 \
+      --model.max 1 \
+      --model.realization NA
 
 echo
-./gradlew test
+echo "Running ExponentialExample"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.others.ExponentialExample --model.rate 1 \
+      --model.realization NA
+
+echo
+echo "Running IsingExample"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.others.IsingExample
+
+
+echo
+echo "Running MarkovChainExample"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.others.MarkovChainExample
+
+
+echo
+echo "Running PlatedMatrixExample"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.others.PlatedMatrixExample \
+      --model.dims.maxSize 3 \
+      --model.replicates.maxSize 5
+
+echo
+echo "Running PoissonPoissonMixture"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.others.PoissonPoissonMixtureExample

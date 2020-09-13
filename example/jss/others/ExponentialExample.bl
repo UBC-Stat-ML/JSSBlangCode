@@ -1,4 +1,4 @@
-package others
+package jss.others
 
 /** Exponential random variable. Values in \((0, \infty)\) */
 model ExponentialExample {

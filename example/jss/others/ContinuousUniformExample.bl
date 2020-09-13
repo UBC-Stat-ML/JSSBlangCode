@@ -1,4 +1,4 @@
-package others
+package jss.others
 
 /** Uniform random variable over a close interval \([m, M]\). */
 model ContinuousUniformExample {

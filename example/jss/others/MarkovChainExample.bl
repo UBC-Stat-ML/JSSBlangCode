@@ -1,9 +1,9 @@
-package others
+package jss.others
 
 /*
  * Please follow README.txt instructions first.
  * To run this example:
- * run others.MarkovChainExample as a Java application.
+ * run jss.others.MarkovChainExample as a Java application.
  */
 model MarkovChainExample {  
   
