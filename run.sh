@@ -86,7 +86,7 @@ blang --model jss.glms.SpikeSlabClassification \
    --model.labels.dataSource data/titanic/titanic.csv \
    --model.labels.name Survived \
    --engine PT \
-   --engine.nChains 12 \
+   --engine.nChains 20 \
    --postProcessor DefaultPostProcessor
 
 
