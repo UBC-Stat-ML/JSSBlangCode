@@ -59,7 +59,7 @@ echo
 blang --model jss.hier.Rocket \
        	--model.data data/rockets.csv \
        	--model.countries.name Country \
-	--model.rockets.name Rocket \
+	--model.rockets.name Rocket
 
 
 echo
@@ -70,7 +70,7 @@ read -n 1 -s -r -p "Press any key to continue."
 echo
 blang --model jss.phylo.PhylogeneticTree \
    --model.observations.file data/primates.fasta \
-   --model.observations.encoding DNA 
+   --model.observations.encoding DNA
 
 
 echo

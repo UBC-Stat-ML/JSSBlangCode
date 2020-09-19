@@ -14,7 +14,7 @@ model MixtureModel {
 
   laws {
 
-    pi | a ~ Dirichlet ( a )
+    pi | a ~ Dirichlet (a)
 
     for (int k : 0 ..< K) {
       mu. get (k) ~ Normal(0.0, 100.0)
