@@ -63,6 +63,14 @@ blang --model jss.hier.Rocket \
 
 
 echo
+echo "Running MixtureModelPlated"
+read -n 1 -s -r -p "Press any key to continue."
+echo
+blang --model jss.gmm.MixtureModelPlated \
+       	--model.data data/obs1Plated.csv
+
+
+echo
 echo "Running PhylogeneticTree"
 echo "Internet connection required to demonstrate"
 echo "importing third party libraries via GitHub"

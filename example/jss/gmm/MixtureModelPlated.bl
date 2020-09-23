@@ -1,0 +1,34 @@
+package jss.gmm
+
+model MixtureModelPlated {
+    
+  param GlobalDataSource data
+
+  param  Integer        K  ?: 2
+  param  Plate<Integer> N
+  param  Plate<Integer> components ?: Plate.ofIntegers("components", K)
+  param  Matrix         a  ?: fixedVector (1.0 , 1.0)
+
+  random Plated<IntVar>  z 
+  random Plated<RealVar> y
+  random Plated<RealVar> mu 
+  random Plated<RealVar> sd 
+  random Simplex         pi ?: latentSimplex(K)
+
+  laws {
+    pi | K ~ SymmetricDirichlet(K, 1.0)
+
+    for (Index<Integer> k : components.indices) {
+      mu.get(k) ~ Normal(0.0, 100.0)
+      sd.get(k) ~ ContinuousUniform(0.0 ,10.0)
+    }
+
+    for (Index<Integer> i : N.indices) {
+      z.get(i) | pi ~ Categorical(pi)
+      y.get(i) | List<RealVar> muList = mu.asList(components),
+                 List<RealVar> sdList = sd.asList(components),
+                 IntVar k = z.get(i)
+        ~ Normal(muList.get(k) , pow(sdList.get(k), 2.0))
+    }
+  }
+}
