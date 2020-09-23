@@ -7,7 +7,6 @@ model MixtureModelPlated {
   param  Integer        K  ?: 2
   param  Plate<Integer> N
   param  Plate<Integer> components ?: Plate.ofIntegers("components", K)
-  param  Matrix         a  ?: fixedVector (1.0 , 1.0)
 
   random Plated<IntVar>  z 
   random Plated<RealVar> y
