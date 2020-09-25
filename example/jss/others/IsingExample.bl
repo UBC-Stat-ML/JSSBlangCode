@@ -6,7 +6,7 @@ import static blang.validation.internals.fixtures.Functions.squareIsingEdges
 /*
  * Please follow README.txt instructions first.
  * To run this example:
- * run others.IsingExample as a Java application.
+ * run jss.others.IsingExample as a Java application or via Blang CLI.
  */
 model IsingExample {
   param Double moment ?: 0.0
