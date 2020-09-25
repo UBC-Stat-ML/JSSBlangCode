@@ -12,10 +12,7 @@ model IsingExample {
   param Double moment ?: 0.0
   param Double beta ?: log(1 + sqrt(2.0)) / 2.0 // critical point
   param Integer N ?: 3
-  random List<IntVar> vertices ?: #[1, 1, 0,
-                                    1, 0, 0, 
-                                    1, 0, 1
-                                    ]
+  random List<IntVar> vertices ?: latentIntList(N*N)
   
   laws {
     

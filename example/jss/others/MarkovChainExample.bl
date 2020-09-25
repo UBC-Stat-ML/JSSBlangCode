@@ -12,7 +12,7 @@ model MarkovChainExample {
           ?: fixedTransitionMatrix(#[#[0.1, 0.9],
                                      #[0.9, 0.1]])
   
-  random List<IntVar> chain ?: #[0, 1, 1, 1, 0]
+  random List<IntVar> chain ?: latentIntList(5)
    
   laws { 
     
