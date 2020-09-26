@@ -125,7 +125,8 @@ echo
 echo "Running MarkovChainExample"
 read -n 1 -s -r -p "Press any key to continue."
 echo
-blang --model jss.others.MarkovChainExample
+blang --model jss.others.MarkovChainExample \
+      --model.chain file data/markovChainObs.txt
 
 
 echo
