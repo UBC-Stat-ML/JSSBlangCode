@@ -14,12 +14,12 @@ import blang.types.ExtensionUtils
 class TestCompositeModel {
   
   // Create some fake observations.
-  val static y = fixedRealList(1.4, 2.1, -0.3)
+  val static y = fixedRealList(2.1, -0.3, 0.8)
   // Instantiating our model with a builder.
   // To apply linear algebra tests, we need a fully-discrete model:
   val static CompositeModel compositeModel = new CompositeModel.Builder()
     .setY(y)
-    .setPermutation(new Permutation(3))
+    .setPermutation(new Permutation(y.size))
     .build
 
   // Turn our synthetic data into type Observation, as required by Blang's architecture
@@ -49,7 +49,7 @@ class TestCompositeModel {
   @Test 
   def void stateSize() {
     test.verbose = true
-    test.checkStateSpaceSize(factorial(3) as int)
+    test.checkStateSpaceSize(factorial(y.size) as int)
   }
   
   @Test

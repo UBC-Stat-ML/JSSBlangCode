@@ -3,10 +3,14 @@ package jss.perm
 import blang.validation.ExactInvarianceTest
 import org.junit.Test
 import blang.validation.Instance
+import static blang.types.StaticUtils.*
 
 class ExactInvarianceTestCompositeModel {
   
+  val static n = 3
   val static CompositeModel compositeModel = new CompositeModel.Builder()
+    .setPermutation(new Permutation(n))
+    .setY(latentRealList(n))
     .build
   val static test = new ExactInvarianceTest => [
     nPosteriorSamplesPerIndep = 1000
