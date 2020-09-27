@@ -10,9 +10,7 @@ Note that this must be run with `source run.sh` to properly set up the blang CLI
 
 directory: example
 ====================================================
-This subdirectory holds the following models, as 
-well as their corresponding datasets, which are used 
-in the manuscript to display results:
+This subdirectory holds the following models as well as their corresponding datasets, which are used in the manuscript to display results:
 
 - Doomsday.bl
 - MixtureModel.bl *
@@ -31,10 +29,10 @@ in the manuscript to display results:
   - PlatedMatrixExample.bl
   - PoissonPoissonMixtureExample.bl
 
-Files with * require the programming language R, and packages dplyr and ggplot2.
-Files with ** require internet connection.
+Models with * require the programming language R, and packages dplyr and ggplot2.
+Models with ** require internet connection.
 
-In order to run an individual model and with arguments different to those used within the manuscript, simple navigate into the example directory and use the CLI as shown in the paper.
+In order to run an individual model and with arguments different to those used within the manuscript, simply navigate into the example directory and use the CLI as shown in the paper.
 'reproduction_material/example/' is the Blang project root directory, and any CLI commands should be ran from there.
 
 
