@@ -5,6 +5,13 @@
 
 
 # Unpack SDK and setup the CLI
+if [ -z "${BASH_VERSINFO+x}" ]; then
+    echo 'Script is running via zsh. Please source the script using a bash environment.'
+    return 1
+else
+    echo 'Script is running via bash.'
+fi
+
 echo "Setting up the CLI"
 tar -xzvf blangSDK-2.13.1.tar.gz
 cd blangSDK-2.13.1
