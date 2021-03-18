@@ -6,8 +6,8 @@
 
 # Unpack SDK and setup the CLI
 echo "Setting up the CLI"
-tar -xzvf blangSDK.tar.gz
-cd blangSDK
+tar -xzvf blangSDK-2.13.1.tar.gz
+cd blangSDK-2.13.1
 echo
 source setup-cli.sh
 echo
