@@ -36,7 +36,7 @@ echo
 
 
 echo
-echo "Running MixtureModel"
+echo "Running MixtureModel with PT"
 echo "By default, the DefaultPostProcessor is used:"
 echo "R with packages 'dplyr' and 'ggplot2' is required."
 read -n 1 -s -r -p "Press any key to continue"
@@ -46,6 +46,17 @@ blang --model jss.gmm.MixtureModel \
   --engine PT \
   --engine.nChains 36 \
   --engine.nScans 30000 \
+  --postProcessor DefaultPostProcessor
+
+echo
+echo "Running MixtureModel with SCM"
+echo "By default, the DefaultPostProcessor is used:"
+echo "R with packages 'dplyr' and 'ggplot2' is required."
+read -n 1 -s -r -p "Press any key to continue"
+echo
+blang --model jss.gmm.MixtureModel \
+  --model.y file data/obs1.txt \
+  --engine SCM \
   --postProcessor DefaultPostProcessor
 
 
