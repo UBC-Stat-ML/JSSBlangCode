@@ -1,10 +1,10 @@
-=== REPRODUCTION MATERIAL README ===
+=== REPLICATION MATERIAL README ===
 
 
 file: run.sh
 ====================================================
-This script should be run from the 'reproduction_material' directory.
-It begins by extracting and installing the blangSDK and CLI tools, and proceeds to run all models in reproduction_material/example.
+This script should be run from the 'replication' directory.
+It begins by extracting and installing the blangSDK and CLI tools, and proceeds to run all models in replication/example.
 Note that this must be run with `source run.sh` to properly configure the blang CLI path.
 
 

@@ -13,8 +13,8 @@ else
 fi
 
 echo "Setting up the CLI"
-tar -xzvf blangSDK-2.13.1.tar.gz
-cd blangSDK-2.13.1
+tar -xzvf blangSDK-2.14.2.tar.gz
+cd blangSDK-2.14.2
 echo
 source setup-cli.sh
 echo

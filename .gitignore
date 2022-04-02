@@ -11,3 +11,4 @@ others/.settings
 others/build
 others/.gradle
 blangSDK-*/
+*.swp
