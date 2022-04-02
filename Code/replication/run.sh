@@ -13,8 +13,8 @@ else
 fi
 
 echo "Setting up the CLI"
-tar -xzvf blangSDK-2.14.2.tar.gz
-cd blangSDK-2.14.2
+tar -xzvf blangSDK-2.13.1.tar.gz
+cd blangSDK-2.13.1
 echo
 source setup-cli.sh
 echo
@@ -38,7 +38,7 @@ echo
 echo
 echo "Running MixtureModel"
 echo "By default, the DefaultPostProcessor is used:"
-echo "R with packages 'tidyverse' and 'cowplot' is required."
+echo "R with packages 'dplyr' and 'ggplot2' is required."
 read -n 1 -s -r -p "Press any key to continue"
 echo
 blang --model jss.gmm.MixtureModel \
@@ -47,18 +47,6 @@ blang --model jss.gmm.MixtureModel \
   --engine.nChains 36 \
   --engine.nScans 30000 \
   --postProcessor DefaultPostProcessor
-
-echo
-echo "Running MixtureModel with SCM"
-echo "By default, the DefaultPostProcessor is used:"
-echo "R with packages 'tidyverse' and 'cowplot' is required."
-read -n 1 -s -r -p "Press any key to continue"
-echo
-blang --model jss.gmm.MixtureModel \
-  --model.y file data/obs1.txt \
-  --engine SCM \
-  --postProcessor DefaultPostProcessor
-
 
 
 echo
