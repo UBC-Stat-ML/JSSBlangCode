@@ -167,10 +167,10 @@ echo "Running Tests for CompositeModel"
 read -n 1 -s -r -p "Press any key to continue."
 echo
 cd ../
-mv PermutationExample tmp
+mkdir -p tmp
+cd tmp
 create-blang-gradle-project --name PermutationExample
-rm -r PermutationExample/src
-mv tmp/src PermutationExample/
+cp -r ../PermutationExample/src PermutationExample/src
 cd PermutationExample
 ./gradlew clean
 ./gradlew test
